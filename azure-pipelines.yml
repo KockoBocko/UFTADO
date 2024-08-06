@@ -8,9 +8,6 @@ stages:
   - deployment: Test_Automation
     displayName: Test_Automation
     timeoutInMinutes: 0
-    pool:
-     name: Teamcenter
-     demands: UFT_Launcher
     # creates an environment if it doesn't exist
     environment: 
       name: 'UFT Hosts'
