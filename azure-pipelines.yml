@@ -1,11 +1,4 @@
 # Starter pipeline
-- task: RunFromALMTask@5
-  inputs:
-    varAlmserv: 'http://15.119.127.231:8080/qcbin'
-    varUserName: 'admin'
-    varDomain: 'KOSTA'
-    varProject: '404'
-    varTestsets: 'Root\TS1\S1'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -19,6 +12,13 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+- task: RunFromALMTask@5
+  inputs:
+    varAlmserv: 'http://15.119.127.231:8080/qcbin'
+    varUserName: 'admin'
+    varDomain: 'KOSTA'
+    varProject: '404'
+    varTestsets: 'Root\TS1\S1'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
