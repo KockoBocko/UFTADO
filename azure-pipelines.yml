@@ -1,26 +1,32 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+trigger: none
+pr: none
 
-trigger:
-- main
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-- task: RunFromALMTask@5
-  inputs:
-    varAlmserv: 'http://15.119.127.231:8080/qcbin'
-    varUserName: 'admin'
-    varDomain: 'KOSTA'
-    varProject: '404'
-    varTestsets: 'Root\TS1\S1'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+- stage: deploy
+  jobs:
+  - job: 'Execute_Test_Automation'
+  - deployment: Test_Automation
+    displayName: Test_Automation
+    timeoutInMinutes: 0
+    pool:
+     name: Teamcenter
+     demands: UFT_Launcher
+    # creates an environment if it doesn't exist
+    environment: 
+      name: 'UFT Hosts'
+      resourceName: PUE01VM1493
+      resourceType: virtualMachine
+    strategy:
+     runOnce:
+       deploy:
+         steps: 
+           - task: RunFromALMTask@5
+             inputs:
+               varAlmserv: 'http://15.119.127.231:8080/qcbin'
+               varClientID: apikey-ecjkfmiskfpicfqbnjeo
+               varApiKeySecret: ddpinmcmjkaecghj 
+               varDomain: 'KOSTA'
+               varProject: '404'
+               varTestsets: 'Root\TS 1\S1'
+               runMode: 'runRemotely'
+               testingToolHost: 'PUE01VM1493'
